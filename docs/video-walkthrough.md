@@ -6,6 +6,9 @@ what you actually did. Do not read unfamiliar technical claims verbatim.
 
 ## Before recording
 
+See [Demo data and recording guide](demo-data.md) for the seeded IDs, resource
+qualifications, expected responses and a separate database setup for each take.
+
 1. Run `npm ci` and `npm run check`.
 2. Choose a new database path (for example `./data/video-take-1.db`) and run:
 
@@ -17,6 +20,8 @@ what you actually did. Do not read unfamiliar technical claims verbatim.
    `npm run check` already builds the server. Keep the server terminal open.
 3. Open README, system design, `src/scheduler.ts`, `tests/persistence.test.ts` and
    [Swagger UI](http://127.0.0.1:3000/docs/). Use a readable font size.
+   For diagram close-ups, open `docs/images/architecture.png` and
+   `docs/images/data-model.png` directly; both are also embedded in the system design.
 4. Prepare a second terminal for `npm run demo`. A fresh take needs another database
    path or a different `DEMO_START`; the demo intentionally persists its booking.
 

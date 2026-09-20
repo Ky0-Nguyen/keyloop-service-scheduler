@@ -6,16 +6,11 @@ Implement Scenario A's backend: accept a customer/vehicle/service/dealership/tim
 request, find both resources for the complete duration, and persist a confirmation.
 See [requirements](requirements.md) for assumptions and the acceptance plan.
 
-```mermaid
-flowchart LR
-    Client[Client stub: demo script / Swagger UI] -->|REST JSON| API[Fastify API\nvalidation + request IDs]
-    API --> Availability[Availability query\nadvisory snapshot]
-    API --> Scheduler[Booking transaction\nvalidation + allocation + idempotency]
-    Availability --> DB[(SQLite WAL\nreference data + appointments)]
-    Scheduler -->|BEGIN IMMEDIATE / COMMIT| DB
-    API --> Logs[Structured JSON logs]
-    API --> Metrics[GET /metrics]
-```
+All diagrams in this document are embedded PNG images. Open the files in
+`docs/images/` directly for presentations; editable SVG versions are included
+alongside them. No diagram rendering plugin is needed to read this document.
+
+![Service scheduler architecture showing the client, API, advisory availability, booking transaction, database and observability](images/architecture.png)
 
 | Component | Responsibility |
 | --- | --- |
@@ -31,20 +26,7 @@ lock, microservice or external platform is needed for this assessment.
 
 ## 2. Data model
 
-```mermaid
-erDiagram
-    CUSTOMER ||--o{ VEHICLE : owns
-    DEALERSHIP ||--o{ SERVICE_BAY : contains
-    DEALERSHIP ||--o{ TECHNICIAN : employs
-    TECHNICIAN ||--o{ QUALIFICATION : holds
-    SERVICE_TYPE ||--o{ QUALIFICATION : requires
-    CUSTOMER ||--o{ APPOINTMENT : requests
-    VEHICLE ||--o{ APPOINTMENT : receives
-    DEALERSHIP ||--o{ APPOINTMENT : hosts
-    SERVICE_TYPE ||--o{ APPOINTMENT : defines
-    SERVICE_BAY ||--o{ APPOINTMENT : accommodates
-    TECHNICIAN ||--o{ APPOINTMENT : performs
-```
+![Service scheduler data model showing entities and one-to-many relationships](images/data-model.png)
 
 Appointments store all entity references, UTC start/end/creation epoch milliseconds,
 a unique idempotency key and a canonical request hash. Response serialization exposes

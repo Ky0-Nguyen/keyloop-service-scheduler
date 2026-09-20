@@ -40,6 +40,9 @@ failure. It writes one real appointment. To repeat at a new time, set
 `DEMO_START` to an unused future UTC timestamp; alternatively use a fresh database
 path for both the seed command and server. No reset command deletes your data.
 
+See [Demo data and recording guide](docs/demo-data.md) for all seeded IDs,
+technician qualifications, a fresh recording setup and manual Swagger scenarios.
+
 ## API
 
 | Method | Route | Purpose |
@@ -74,6 +77,12 @@ conflicts `409`, and storage lock timeout `503` with `Retry-After: 1`. Retry a `
 with bounded exponential backoff, jitter and the **same** idempotency key.
 
 ## Design and boundaries
+
+![Service scheduler architecture](docs/images/architecture.png)
+
+The [system design](docs/system-design.md) includes the architecture and data model
+as PNG images. They can also be opened directly from `docs/images/` for the video
+walkthrough. Editable SVG versions are kept alongside the PNGs.
 
 - [System design](docs/system-design.md): architecture, data flow, decisions,
   concurrency, observability, tradeoffs and GenAI design collaboration.
